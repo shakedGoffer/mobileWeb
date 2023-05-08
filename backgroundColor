@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chang-backgroundColor</title>
+</head>
+<style>
+    .center {
+        position: relative;
+        transform: translateY(-50%);
+    }
+
+    .my-button {
+        background-color: #4CAF50;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 17px 34px;
+        font-size: 18px;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(44, 31, 31, 0.7);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #colorNum {
+        background-color: #798379;
+        padding: 5px 15px;
+        border-radius: 17px;
+        font-size: 15px;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+
+
+    .my-button:active {
+        transform: scale(0.9);
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+</style>
+
+<body>
+    <button class="center my-button" id="btn" onclick="changColor()">chang background color</button>
+    <p id="colorNum" class="center ">rgba(255, 255, 255,0.1)</p>
+
+
+    <script>
+
+        // change body backgroundColor for a random color + toast the rgba 
+        function changColor() {
+            //const arrColors = ["red", "green", "white", "black", "pink", "blue", "purple"];
+            //document.body.style.backgroundColor = arrColors[Math.floor(Math.random() * (arrColors.length))];
+            const color = "rgba(" + rand(255) + ", " + rand(255) + ", " + rand(255) + ", " + Math.random().toFixed(1) + ")";
+            document.body.style.backgroundColor = color;
+
+            // rgba messene
+            let colorNum = document.getElementById("colorNum");
+            colorNum.innerText = color;
+            colorNum.style.opacity = 1; // visible
+
+            // time out appear + visible
+            setTimeout(function () {
+                colorNum.style.opacity = 0; // hidden
+            }, 1500);
+        }
+
+        // random number 0-num
+        function rand(num) {
+            return Math.floor(Math.random() * num);
+        }
+
+    </script>
+
+</body>
+
+</html>

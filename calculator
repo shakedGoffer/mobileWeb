@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
+    <title>calculator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #view {
+            border: 2px solid rgb(228, 225, 225);
+            padding: 8px 10px;
+            font-size: 30px;
+            display: block;
+            min-height: 33px;
+            word-break: break-all;
+        }
+
+        p button {
+            width: 50px;
+            height: 50px;
+            font-size: 26px;
+            margin-right: 7px;
+            padding: 7px 12px;
+            border: 0.3px solid;
+            border-radius: 45%;
+            box-shadow: 7px 2px 6px rgba(44, 31, 31, 0.5);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        p button:active {
+            background-color: rgb(211, 212, 212);
+        }
+
+        p .action {
+            color: rgb(29, 139, 153);
+        }
+
+        #backSpace {
+            width: 45px;
+            height: 40px;
+            font-size: 19px;
+            color: red;
+        }
+
+        #cal {
+            background-color: rgb(29, 139, 153);
+            color: white;
+            border-color: rgb(29, 139, 153);
+        }
+
+        #clear {
+            width: 116px;
+            height: 50px;
+            border-radius: 45%;
+            font-size: 25px;
+            color: red;
+            border-color: black;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <h1>shaked's calculator</h1>
+
+    <div style="width: 242px;">
+
+
+        <p id="view"></p>
+        <p id="error" style="display: none; padding: 5px; text-align: center; 
+        background-color: rgba(255, 0, 0, 0.562); border: dashed red;">Error</p>
+
+
+        <p> </p>
+
+        <p>
+            <button class="number" onclick="addToView(1)">1</button>
+            <button class="number" onclick="addToView(2)">2</button>
+            <button class="number" onclick="addToView(3)">3</button>
+            <button class="action" onclick="addToView('+')">+</button> <!-- add -->
+
+        </p>
+
+        <p>
+            <button class="number" onclick="addToView(4)">4</button>
+            <button class="number" onclick="addToView(5)">5</button>
+            <button class="number" onclick="addToView(6)">6</button>
+            <button class="action" onclick="addToView('-')">-</button> <!-- reduce -->
+        </p>
+
+        <p>
+            <button class="number" onclick="addToView(7)">7</button>
+            <button class="number" onclick="addToView(8)">8</button>
+            <button class="number" onclick="addToView(9)">9</button>
+            <button class="action" onclick="addToView('*')">x</button> <!-- multiply -->
+        </p>
+
+        <p>
+            <button class="number" onclick="addToView(0)">0</button>
+            <button class="number" onclick="addToView('.')">.</button>
+            <button class="number" onclick="brackets()">()</button>
+            <button class="action" onclick="addToView('/')">/</button> <!-- divide -->
+        </p>
+
+        <p>
+            <button id="clear" onclick="clearInput()">CLEAR</button>
+            <button id="backSpace" onclick="backSpace()"><=</button>
+                    <button id="cal" onclick="cal()">=</button>
+        </p>
+    </div>
+
+
+
+    <script>
+
+        // add to #view p
+        function addToView(num) {
+            document.getElementById("error").style.display = "none"
+            document.getElementById("view").innerHTML += num;
+
+        }
+
+        // convert the math string to mathematical expression + show the rustle on #view p
+        function cal() {
+
+            try {
+                document.getElementById("view").innerHTML = eval(document.getElementById("view").innerHTML);
+                document.getElementById("error").style.display = "none";
+            } catch (e) {
+                if (e instanceof SyntaxError) {
+                    document.getElementById("error").style.display = "block";
+                }
+            }
+
+        }
+
+        // controle brackets
+        var count = 0;
+        function brackets() {
+            if (count % 2 == 0)
+                addToView('(');
+            else
+                addToView(')');
+
+            count++;
+        }
+
+        // erase last char / num / action
+        function backSpace() {
+            document.getElementById("error").style.display = "none"
+            if (document.getElementById("view").innerHTML.endsWith('('))
+                count = 0;
+            else if (document.getElementById("view").innerHTML.endsWith(')'))
+                count = 1;
+            document.getElementById("view").innerHTML = document.getElementById("view").innerHTML.substring(0, document.getElementById("view").innerHTML.length - 1);
+        }
+
+        // clear all
+        function clearInput() {
+            document.getElementById("view").innerHTML = "";
+            document.getElementById("error").style.display = "none";
+            count = 0;
+        }
+    </script>
+</body>
+
+</html>
